@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &621222911632895598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6308782215990744940}
+  - component: {fileID: 8445983940239322227}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6308782215990744940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621222911632895598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 285.7741, y: 246.17325, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8445983940239322227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621222911632895598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc3b67f09436c8043aa86106b6585825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  playerSprites:
+  - {fileID: -4360530552843628718, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: 7165950743707284623, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: -3352868958805856340, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: -4506795734596175823, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: -2202765497068720075, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: 2147417920, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: 1213686017, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: -1193130802, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: -1925095621, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  - {fileID: 1830990548, guid: 947cbf7d67b9e2547a0f09bb54b7cf2b, type: 3}
+  showInfo: {fileID: 0}
+  enemySpawner: {fileID: 0}
+  rateOfSpawn: 1
+  amountOfEnemies: 5
+  rateOfSpawnSets: 3
+  amountOfEnemySets: 2
+  rateOfLevels: 3
+  amountOfLevels: 1
+  lifesUi: {fileID: 0}
+  GameFinished: 0

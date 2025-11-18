@@ -1,0 +1,138 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+public class Player : MonoBehaviour
+{
+    [SerializeField] private float speed;
+    [SerializeField] private float rateOfFire;
+    [SerializeField] private Vector2 clampLimits = new Vector2(4.7f, 8.3f);
+    [SerializeField] private Transform[] shotPosition;
+    [SerializeField] private GameObject[] bullet;
+    [SerializeField] private Slider sliderLife;
+    [SerializeField] private GameObject lifesUi;
+    [SerializeField] private AudioClip explosionAudioResource;
+    [SerializeField] private GameObject explosion;
+
+    private InputAction moveAction;
+    private InputAction attackAction;
+    private Vector3 initialPosition;
+    private int currentBullet = 0;
+    private float timerRoF = 0;
+    private int lifes = 3;
+    private float life = 100;
+    private bool canBeDamaged = true;
+    private bool canMove = true;
+    private AudioSource audioSource;
+
+    public bool CanMove
+    {
+        get { return canMove; }
+        set { canMove = value; }
+    }
+
+    void Start()
+    {
+        initialPosition = transform.position;
+
+        // get components
+        audioSource = GetComponent<AudioSource>();
+
+        // get action inputs
+        moveAction = InputSystem.actions.FindAction("Move");
+        attackAction = InputSystem.actions.FindAction("Attack");
+    }
+
+    void Update()
+    {
+        // read values from actions
+        Vector2 moveValue = moveAction.ReadValue<Vector2>();
+        bool attackValue = attackAction.IsPressed();
+
+        move(moveValue);
+        fire(attackValue);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("BulletEnemy") || collision.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+            updateLife();
+        }
+    }
+
+    private void updateLife()
+    {
+        if (!canBeDamaged)
+            return;
+
+        life -= 20;
+        sliderLife.value = life / 100;
+
+        if (life <= 0)
+        {
+            Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
+            audioSource.PlayOneShot(explosionAudioResource);
+
+            // remove life
+            Transform[] uiLifesImages = lifesUi.GetComponentsInChildren<Transform>();
+            Destroy(uiLifesImages[uiLifesImages.Length - 1].gameObject);
+            lifes--;
+
+            // reset player
+            StartCoroutine(resetPlayer());
+        }
+    }
+
+    // move player and limit the translation to the size of the screen
+    private void move(Vector2 moveValue)
+    {
+        if (!canMove)
+            return;
+
+        transform.Translate(moveValue.normalized * speed * Time.deltaTime);
+        float xClamp = Mathf.Clamp(transform.position.x, -clampLimits.x, clampLimits.x);
+        float yClamp = Mathf.Clamp(transform.position.y, -clampLimits.y, clampLimits.y);
+        transform.position = new Vector3(xClamp, yClamp, 0);
+    }
+
+    // fire bullets
+    private void fire(bool attackValue)
+    {
+        timerRoF += Time.deltaTime;
+
+        if (!attackValue || timerRoF < rateOfFire)
+            return;
+
+        foreach (Transform pos in shotPosition)
+        {
+            GameObject bulletObject = Instantiate(bullet[currentBullet], pos.transform.position, Quaternion.identity);
+            bulletObject.tag += tag;
+        }
+        timerRoF = 0;
+    }
+
+    IEnumerator resetPlayer()
+    {
+        // restore player to initial position
+        life = 100;
+        sliderLife.value = life;
+        transform.position = initialPosition;
+
+        canBeDamaged = false;
+        SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
+        renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.4f);
+
+        if (lifes <= 0)
+        {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().gameOver();
+            Destroy(gameObject);
+        }
+
+        yield return new WaitForSeconds(5);
+        canBeDamaged = true;
+        renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1.0f);
+    }
+}
