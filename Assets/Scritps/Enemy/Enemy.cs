@@ -65,7 +65,6 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision.gameObject.tag);
         if (collision.CompareTag("BulletPlayer"))
         {
             Destroy(collision.gameObject);
@@ -73,7 +72,6 @@ public class Enemy : MonoBehaviour
             if (isBoss && bossHit < 10)
             {
                 bossHit++;
-                print(bossHit);
                 bossSliderLife.value = 1.0f - ((float)bossHit / 10.0f);
                 return;
             }

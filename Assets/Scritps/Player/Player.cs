@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    // input
+    private Vector2 m_moveAmt;
+    private bool m_attackAmt;
+
+
+    // configs
     [SerializeField] private float speed;
     [SerializeField] private float rateOfFire;
     [SerializeField] private Vector2 clampLimits = new Vector2(4.7f, 8.3f);
@@ -15,8 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip explosionAudioResource;
     [SerializeField] private GameObject explosion;
 
-    private InputAction moveAction;
-    private InputAction attackAction;
+    // handlings
     private Vector3 initialPosition;
     private int currentBullet = 0;
     private float timerRoF = 0;
@@ -38,20 +43,12 @@ public class Player : MonoBehaviour
 
         // get components
         audioSource = GetComponent<AudioSource>();
-
-        // get action inputs
-        moveAction = InputSystem.actions.FindAction("Move");
-        attackAction = InputSystem.actions.FindAction("Attack");
     }
 
     void Update()
     {
-        // read values from actions
-        Vector2 moveValue = moveAction.ReadValue<Vector2>();
-        bool attackValue = attackAction.IsPressed();
-
-        move(moveValue);
-        fire(attackValue);
+        move();
+        fire();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -63,6 +60,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnMove(InputAction.CallbackContext ctx)
+    {
+        m_moveAmt = ctx.ReadValue<Vector2>();
+    }
+
+    public void OnAttack(InputAction.CallbackContext ctx)
+    {
+        // Attack logic here: The button is pressed.
+        if (ctx.performed)
+        {
+            m_attackAmt = true;
+        }
+
+        // Reset or stop the attack logic here: The button was released.
+        if (ctx.canceled)
+        {
+            m_attackAmt = false;
+        }
+    }
+
+    // my methods
     private void updateLife()
     {
         if (!canBeDamaged)
@@ -87,23 +105,23 @@ public class Player : MonoBehaviour
     }
 
     // move player and limit the translation to the size of the screen
-    private void move(Vector2 moveValue)
+    private void move()
     {
         if (!canMove)
             return;
 
-        transform.Translate(moveValue.normalized * speed * Time.deltaTime);
+        transform.Translate(m_moveAmt.normalized * speed * Time.deltaTime);
         float xClamp = Mathf.Clamp(transform.position.x, -clampLimits.x, clampLimits.x);
         float yClamp = Mathf.Clamp(transform.position.y, -clampLimits.y, clampLimits.y);
         transform.position = new Vector3(xClamp, yClamp, 0);
     }
 
     // fire bullets
-    private void fire(bool attackValue)
+    private void fire()
     {
         timerRoF += Time.deltaTime;
 
-        if (!attackValue || timerRoF < rateOfFire)
+        if (!m_attackAmt || timerRoF < rateOfFire)
             return;
 
         foreach (Transform pos in shotPosition)
