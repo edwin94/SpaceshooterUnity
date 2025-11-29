@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         {
             playerSpriteIndex = 0;
         }
+        int currentBullet = PlayerPrefs.GetInt("ammoSpriteIndex", 0);
 
         // set sprite on player
         GameObject player = GameObject.Find("Player");
@@ -57,6 +58,8 @@ public class GameManager : MonoBehaviour
             {
                 image.sprite = playerSprites[playerSpriteIndex];
             }
+
+            player.GetComponent<Player>().CurrentBullet = currentBullet;
         }
     }
 

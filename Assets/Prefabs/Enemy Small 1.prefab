@@ -254,6 +254,11 @@ MonoBehaviour:
   explosionAudioResource: {fileID: 8300000, guid: 3c80baff5f1cdeb4f81fbae62316b8f5, type: 3}
   explosion: {fileID: 1500006710965113658, guid: 003cc440e9ea09a49a9e17bdd7e971b5, type: 3}
   isBoss: 0
+  itemPowerUps:
+  - {fileID: 6563726458810365698, guid: d87395c8c5dbe3c4499d72c8a05ae49c, type: 3}
+  - {fileID: 6563726458810365698, guid: c0bd97de737e4f849b7908ecac15cbc5, type: 3}
+  - {fileID: 6563726458810365698, guid: e3705ebd61cf7ec429fc30c09ae39711, type: 3}
+  - {fileID: 6563726458810365698, guid: 0a4fa25f7c2f0aa47ac56fe2d8b987d0, type: 3}
 --- !u!82 &590686828435186876
 AudioSource:
   m_ObjectHideFlags: 0

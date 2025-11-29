@@ -37,6 +37,18 @@ public class Player : MonoBehaviour
         set { canMove = value; }
     }
 
+    public int Lifes
+    {
+        get { return lifes; }
+        set { lifes = value; }
+    }
+
+    public int CurrentBullet
+    {
+        get { return currentBullet; }
+        set { currentBullet = value; }
+    }
+
     void Start()
     {
         initialPosition = transform.position;
@@ -87,7 +99,7 @@ public class Player : MonoBehaviour
             return;
 
         life -= 20;
-        sliderLife.value = life / 100;
+        sliderLife.value = life / 100.0f;
 
         if (life <= 0)
         {
@@ -95,13 +107,21 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(explosionAudioResource);
 
             // remove life
-            Transform[] uiLifesImages = lifesUi.GetComponentsInChildren<Transform>();
-            Destroy(uiLifesImages[uiLifesImages.Length - 1].gameObject);
+            var icons = lifesUi.GetComponentsInChildren<Image>();
+            icons[lifes - 1].enabled = false;
             lifes--;
 
             // reset player
             StartCoroutine(resetPlayer());
         }
+    }
+
+    public void increaseLifes()
+    {
+        lifes++;
+
+        var icons = lifesUi.GetComponentsInChildren<Image>();
+        icons[lifes - 1].enabled = true;
     }
 
     // move player and limit the translation to the size of the screen
@@ -120,7 +140,7 @@ public class Player : MonoBehaviour
     private void fire()
     {
         timerRoF += Time.deltaTime;
-
+        
         if (!m_attackAmt || timerRoF < rateOfFire)
             return;
 
@@ -153,4 +173,31 @@ public class Player : MonoBehaviour
         canBeDamaged = true;
         renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1.0f);
     }
+
+    public void increaseRoFFunc()
+    {
+        StartCoroutine(increaseRoF());
+    }
+
+    IEnumerator increaseRoF()
+    {
+        float defaultRateOfFire = 0.5f;
+        rateOfFire = 0.1f;
+        yield return new WaitForSeconds(5);
+        rateOfFire = defaultRateOfFire;
+    }
+
+    public void increaseSpeedFunc()
+    {
+        StartCoroutine(increaseSpeed());
+    }
+   
+    IEnumerator increaseSpeed()
+    {
+        float defaultSpeed = 5.0f;
+        speed = 10.0f;
+        yield return new WaitForSeconds(5);
+        speed = defaultSpeed;
+    }
+
 }

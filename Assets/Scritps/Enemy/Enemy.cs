@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip explosionAudioResource;
     [SerializeField] private GameObject explosion;
     [SerializeField] private bool isBoss;
+    [SerializeField] private GameObject[] itemPowerUps;
     private Vector2 clampLimits = new Vector2(4.7f, 7.0f);
     private BossState bossState = BossState.MovingLeft;
     private int bossHit = 0;
@@ -81,6 +82,16 @@ public class Enemy : MonoBehaviour
                 Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().youWin();
             }
+
+            // create power up
+            if (Random.value >= 0.8f)
+            {
+                Random.Range(0, itemPowerUps.Length);
+                Instantiate(itemPowerUps[Random.Range(0, itemPowerUps.Length)], transform.position, Quaternion.identity);
+            }
+
+            // use this to unlock new shots
+            PlayerPrefs.SetInt("EnemiesDestroy", PlayerPrefs.GetInt("EnemiesDestroy") + 1);
 
             audioSource.PlayOneShot(explosionAudioResource);
             Destroy(gameObject);

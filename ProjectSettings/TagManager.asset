@@ -9,6 +9,7 @@ TagManager:
   - BulletPlayer
   - BulletEnemy
   - AudioManager
+  - PowerUp
   layers:
   - Default
   - TransparentFX
