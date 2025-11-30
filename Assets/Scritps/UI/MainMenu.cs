@@ -35,13 +35,9 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("ammoSpriteIndex", ammoPosition);
     }
 
-    public void startGame(string level)
+    public void startGame(int level)
     {
-        if (level.Equals(""))
-        {
-            level = "Level 01";
-        }
-
+        PlayerPrefs.SetInt("Level", level);
         SceneManager.LoadScene(level);
     }
 
