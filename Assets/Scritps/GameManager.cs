@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int amountOfLevels = 5;
     [SerializeField] private GameObject lifesUi;
 
-
+    private const int LAST_LEVEL_CREATED = 5;
+    
     private int playerSpriteIndex = 0;
     public bool GameFinished = false;
 
@@ -87,19 +88,33 @@ public class GameManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<Player>().CanMove = false;
 
-        StartCoroutine(movingToNextLevel());
+        int level = PlayerPrefs.GetInt("Level");
+
+        if (level == LAST_LEVEL_CREATED)
+        {
+            level = 0;
+            PlayerPrefs.SetInt("Level", level);
+            StartCoroutine(movingToMainMenu());
+        }
+        else
+        {
+            level++;
+            PlayerPrefs.SetInt("Level", level);
+            StartCoroutine(movingToNextLevel(level));
+        }
     }
 
-    IEnumerator movingToNextLevel()
+    IEnumerator movingToNextLevel(int level)
     {
-        showInfo.text = "You win, moving to next level";
+        showInfo.text = "You win the battle, moving to next one";
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Level 02");
+        SceneManager.LoadScene(level);
     }
 
     IEnumerator movingToMainMenu()
     {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Main Menu");
+        showInfo.text = "You have won the war, thanks for playing!";
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(0);
     }
 }
