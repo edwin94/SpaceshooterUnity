@@ -122,7 +122,10 @@ public class Player : MonoBehaviour
     public void increaseLifes()
     {
         lifes++;
+        if (lifes > 3)
+            lifes = 3;
 
+        PlayerPrefs.SetInt("CurrentLifes", lifes);
         updateLifeIcons();
     }
 
