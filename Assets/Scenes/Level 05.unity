@@ -883,7 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8445983940239322227, guid: ba4f4a72c1531e540afffd8f02531582, type: 3}
       propertyPath: amountOfEnemySets
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

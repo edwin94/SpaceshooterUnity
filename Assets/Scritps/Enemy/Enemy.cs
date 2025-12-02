@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     private float time;
     private float timerRoF;
     private int currentBullet = 0;
+    private bool isDead = false;
 
     public float Amplitude
     {
@@ -93,8 +94,7 @@ public class Enemy : MonoBehaviour
             // use this to unlock new shots
             PlayerPrefs.SetInt("EnemiesDestroy", PlayerPrefs.GetInt("EnemiesDestroy") + 1);
 
-            audioSource.PlayOneShot(explosionAudioResource);
-            Destroy(gameObject);
+            destroy();
         }
     }
 
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
             // Mathf.Sin(time) returns a value between -1 and 1
             // Multiplying by amplitude controls the height of the movement
             float newY = startY + (Mathf.Sin(time) * amplitude);
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z); // Apply the new position. We keep the current X and Z, and use the new Y.
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z); 
         }
     }
 
@@ -159,12 +159,12 @@ public class Enemy : MonoBehaviour
     {
         timerRoF += Time.deltaTime;
 
-        if (timerRoF < rateOfFire)
+        if (timerRoF < rateOfFire || isDead)
             return;
 
         foreach (Transform pos in shotPosition)
         {
-            GameObject bulletObject = Instantiate(bullet[currentBullet], pos.transform.position, Quaternion.identity);
+            GameObject bulletObject = Instantiate(bullet[currentBullet], pos.transform.position, transform.rotation * Quaternion.Euler(0f, 0f, -90f));
             bulletObject.GetComponent<Bullet>().GoesLeft = true;
             bulletObject.tag += tag;
         }
@@ -177,5 +177,18 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void destroy()
+    {
+        isDead = true;
+
+        audioSource.PlayOneShot(explosionAudioResource);
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+
+        Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
+
+        Destroy(gameObject, 1.0f);
     }
 }

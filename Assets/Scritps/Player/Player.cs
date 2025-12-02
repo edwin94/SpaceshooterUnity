@@ -140,13 +140,13 @@ public class Player : MonoBehaviour
     private void fire()
     {
         timerRoF += Time.deltaTime;
-        
+
         if (!m_attackAmt || timerRoF < rateOfFire)
             return;
 
         foreach (Transform pos in shotPosition)
         {
-            GameObject bulletObject = Instantiate(bullet[currentBullet], pos.transform.position, Quaternion.identity);
+            GameObject bulletObject = Instantiate(bullet[currentBullet], pos.transform.position, transform.rotation * Quaternion.Euler(0f, 0f, -90f));
             bulletObject.tag += tag;
         }
         timerRoF = 0;
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(increaseSpeed());
     }
-   
+
     IEnumerator increaseSpeed()
     {
         float defaultSpeed = 5.0f;

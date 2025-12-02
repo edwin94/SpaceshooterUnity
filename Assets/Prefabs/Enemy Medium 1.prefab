@@ -283,7 +283,7 @@ MonoBehaviour:
   - {fileID: 3617138356384105120}
   - {fileID: 6208666390627391539}
   bullet:
-  - {fileID: 2315868460282392419, guid: f6c18627cafecba4b968042d2cfe55cd, type: 3}
+  - {fileID: 2315868460282392419, guid: 82ca5686228251342971bfe81b32370a, type: 3}
   explosionAudioResource: {fileID: 8300000, guid: 3c80baff5f1cdeb4f81fbae62316b8f5, type: 3}
   explosion: {fileID: 1500006710965113658, guid: 003cc440e9ea09a49a9e17bdd7e971b5, type: 3}
   isBoss: 0

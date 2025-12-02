@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        Vector2 direction = goesLeft ? Vector2.left : Vector2.right;
+        Vector2 direction = goesLeft ? Vector2.down : Vector2.up;
         transform.Translate(direction * speed * Time.deltaTime);
     }
 }
