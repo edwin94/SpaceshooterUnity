@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
     public void startGame(int level)
     {
         PlayerPrefs.SetInt("Level", level);
+        PlayerPrefs.SetInt("CurrentLifes", 3);
         SceneManager.LoadScene(level);
     }
 

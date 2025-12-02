@@ -55,6 +55,9 @@ public class Player : MonoBehaviour
 
         // get components
         audioSource = GetComponent<AudioSource>();
+
+        lifes = PlayerPrefs.GetInt("CurrentLifes");
+        updateLifeIcons();
     }
 
     void Update()
@@ -107,9 +110,9 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(explosionAudioResource);
 
             // remove life
-            var icons = lifesUi.GetComponentsInChildren<Image>();
-            icons[lifes - 1].enabled = false;
             lifes--;
+            updateLifeIcons();
+            PlayerPrefs.SetInt("CurrentLifes", lifes);
 
             // reset player
             StartCoroutine(resetPlayer());
@@ -120,8 +123,7 @@ public class Player : MonoBehaviour
     {
         lifes++;
 
-        var icons = lifesUi.GetComponentsInChildren<Image>();
-        icons[lifes - 1].enabled = true;
+        updateLifeIcons();
     }
 
     // move player and limit the translation to the size of the screen
@@ -150,6 +152,18 @@ public class Player : MonoBehaviour
             bulletObject.tag += tag;
         }
         timerRoF = 0;
+    }
+
+    private void updateLifeIcons()
+    {
+        var icons = lifesUi.GetComponentsInChildren<Image>();
+        for (int i = 0; i < 3; i++)
+        {
+            if (i < lifes)
+                icons[i].enabled = true;
+            else
+                icons[i].enabled = false;
+        }
     }
 
     IEnumerator resetPlayer()
