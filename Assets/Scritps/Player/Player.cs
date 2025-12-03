@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     private bool canBeDamaged = true;
     private bool canMove = true;
     private AudioSource audioSource;
+    private GameManager gameManager;
 
     public bool CanMove
     {
@@ -55,7 +56,9 @@ public class Player : MonoBehaviour
 
         // get components
         audioSource = GetComponent<AudioSource>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
+        // get lifes
         lifes = PlayerPrefs.GetInt("CurrentLifes");
         updateLifeIcons();
     }
@@ -92,6 +95,14 @@ public class Player : MonoBehaviour
         if (ctx.canceled)
         {
             m_attackAmt = false;
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            gameManager.pauseCallBack();
         }
     }
 
@@ -216,5 +227,4 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         speed = defaultSpeed;
     }
-
 }

@@ -18,10 +18,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int amountOfLevels = 5;
     [SerializeField] private GameObject lifesUi;
 
+    [SerializeField] private GameObject gamingPanel;
+    [SerializeField] private GameObject pausePanel;
+
     private const int LAST_LEVEL_CREATED = 5;
-    
+
     private int playerSpriteIndex = 0;
     public bool GameFinished = false;
+    private bool isPause = false;
 
     void Start()
     {
@@ -74,6 +78,8 @@ public class GameManager : MonoBehaviour
         enemySpawnerClass.RateOfLevels = rateOfLevels;
         enemySpawnerClass.AmountOfLevels = amountOfLevels;
         StartCoroutine(enemySpawnerClass.enemySpawnerSetEnumarator());
+
+        Time.timeScale = 1f;
     }
 
     public void gameOver()
@@ -116,5 +122,22 @@ public class GameManager : MonoBehaviour
         showInfo.text = "You have won the war, thanks for playing!";
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(0);
+    }
+
+    public void pauseCallBack()
+    {
+        isPause = !isPause;
+        if (isPause)
+        {
+            Time.timeScale = 0f;
+            pausePanel.SetActive(true);
+            gamingPanel.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            pausePanel.SetActive(false);
+            gamingPanel.SetActive(true);
+        }
     }
 }

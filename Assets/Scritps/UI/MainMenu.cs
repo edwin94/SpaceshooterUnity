@@ -61,4 +61,9 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("playerSpriteIndex", 0);
         PlayerPrefs.SetInt("ammoSpriteIndex", 0);
     }
+
+    public void CallQuit()
+    {
+        Application.Quit();
+    }
 }

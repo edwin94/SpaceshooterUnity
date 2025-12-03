@@ -850,6 +850,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 729117427}
     - target: {fileID: 8445983940239322227, guid: ba4f4a72c1531e540afffd8f02531582, type: 3}
+      propertyPath: pausePanel
+      value: 
+      objectReference: {fileID: 6471448324687201352}
+    - target: {fileID: 8445983940239322227, guid: ba4f4a72c1531e540afffd8f02531582, type: 3}
+      propertyPath: gamingPanel
+      value: 
+      objectReference: {fileID: 6471448324687201353}
+    - target: {fileID: 8445983940239322227, guid: ba4f4a72c1531e540afffd8f02531582, type: 3}
       propertyPath: enemySpawner
       value: 
       objectReference: {fileID: 3165896599759998784}
@@ -975,6 +983,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d2e7f330568ab84197df8125759c9f6, type: 3}
+--- !u!1 &6471448324687201352 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8338235065447395216, guid: 8d2e7f330568ab84197df8125759c9f6, type: 3}
+  m_PrefabInstance: {fileID: 6471448324687201351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6471448324687201353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 530384719580237459, guid: 8d2e7f330568ab84197df8125759c9f6, type: 3}
+  m_PrefabInstance: {fileID: 6471448324687201351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
