@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
         if (level == LAST_LEVEL_CREATED)
         {
             level = 0;
+            showInfo.text = "You have won the war, thanks for playing!";
             PlayerPrefs.SetInt("Level", level);
             StartCoroutine(movingToMainMenu());
         }
@@ -119,7 +120,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator movingToMainMenu()
     {
-        showInfo.text = "You have won the war, thanks for playing!";
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(0);
     }
