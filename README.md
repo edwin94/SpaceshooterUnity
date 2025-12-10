@@ -58,7 +58,7 @@ A robust interaction system was added to enhance gameplay depth.
 | Key | Action |
 | :--- | :--- |
 | **W / A / S / D** | Ship Movement |
-| **Spacebar** | Shoot |
+| **Left Clic Mouse** | Shoot |
 
 ---
 
